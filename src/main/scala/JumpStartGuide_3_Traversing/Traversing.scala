@@ -20,6 +20,10 @@ object Traversing {
   def updateUsers(users: List[User]): Future[List[User]] = {
     users.traverse(updateUser)
   }
-}
 
+  private val foo: List[Future[String]] = List(Future("hello"), Future("world"))
+  def sequence(): Future[List[String]] = {
+    foo.sequence  
+  }
+}
 case class User(name: String){}

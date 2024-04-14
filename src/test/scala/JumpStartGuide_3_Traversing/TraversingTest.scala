@@ -21,4 +21,13 @@ class TraversingTest extends AnyFlatSpec with Diagrams with TimeLimits with Scal
       assert(userList(2).name.toCharArray.forall(_.isLetterOrDigit))
     }
   }
+
+  "sequenceで" should "Future[List[String]]が返ってくる" in {
+    val fls = Traversing.sequence()
+    fls.map { stringList =>
+      assert(stringList.length == 2)
+      assert(stringList(0) == "hello")
+      assert(stringList(1) == "world")
+    }
+  }
 }
