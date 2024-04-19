@@ -1,4 +1,7 @@
-# READMEといいつつメモ
+# READMEというよりメモ
+
+# [JumpStartGuide](https://typelevel.org/cats/jump_start_guide.html)の章を写経
+してるけど、`???`部分の実装が面倒くさそうな章はスキップしてる
 
 # 代数的性質と用語
 - Associative(結合的)

@@ -1,7 +1,6 @@
 package JumpStartGuide_3_Traversing
 
-import cats.implicits.catsSyntaxTuple3Semigroupal
-import cats.syntax.all._
+import cats.syntax.all.*
 
 import scala.util.Random
 
@@ -23,7 +22,7 @@ object Traversing {
 
   private val foo: List[Future[String]] = List(Future("hello"), Future("world"))
   def sequence(): Future[List[String]] = {
-    foo.sequence  
+    foo.sequence
   }
 }
 case class User(name: String){}
