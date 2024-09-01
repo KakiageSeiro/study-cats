@@ -37,3 +37,69 @@ object AlternativeSample {
   // 7 + 5 = 12
   // 8 + 5 = 13
 }
+
+// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+// ここからはAlternativeを実装したパーサーを作るサンプル
+trait Decoder[A] {
+  def decode(in: String): Either[Throwable, A]
+}
+
+object Decoder {
+  def from[A](f: String => Either[Throwable, A]): Decoder[A] =
+    new Decoder[A] {
+      def decode(in: String) = f(in)
+    }
+}
+
+// Decoderを使う時は自動的にこのAlternativeもついてくるよ
+implicit val decoderAlternative: Alternative[Decoder] = new Alternative[Decoder] {
+  def pure[A](a: A) = Decoder.from(Function.const(Right(a)))
+
+  def empty[A] = Decoder.from(Function.const(Left(new Error("No dice."))))
+
+  def combineK[A](l: Decoder[A], r: Decoder[A]): Decoder[A] =
+    new Decoder[A] {
+      def decode(in: String) = l.decode(in).orElse(r.decode(in))
+    }
+
+  def ap[A, B](ff: Decoder[A => B])(fa: Decoder[A]): Decoder[B] =
+    new Decoder[B] {
+      def decode(in: String) = fa.decode(in) ap ff.decode(in)
+    }
+}
+
+object Alternativeを実装したDecoderを使ってみる {
+  // どのようにパース(デコード)するかを定義する関数2個
+  def parseInt(s: String): Either[Throwable, Int] = Either.catchNonFatal(s.toInt)
+
+  def parseIntFirstChar(s: String): Either[Throwable, Int] = Either.catchNonFatal(2 * Character.digit(s.charAt(0), 10))
+
+  // まずparseIntをやって無理だったらparseIntFirsChatをやるパーサー(デコーダー)を作る
+  val decoder: Decoder[Int] = Decoder.from(parseInt) <+> Decoder.from(parseIntFirstChar)
+}
+
+// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+// Alternativeはseparate()でパーティショニング(分類みたいな)ができる
+// 分類できるものはよくわからんがEitherとかtuple2とか
+
+object Alternativeでリクエストの結果をパーティショニング {
+  // なんかリクエストがきたら成功したり失敗したりすることをシミュレートする関数
+  def requestResource(a: Int): Either[(Int, String), (Int, Long)] = {
+    if (a % 4 == 0) Left((a, "Bad request"))
+    else if (a % 3 == 0) Left((a, "Server error"))
+    else Right((a, 200L))
+  }
+
+  // たくさんリクエストをして、結果を分類してみる
+  val partitionedResults: (Vector[(Int, String)], Vector[(Int, Long)]) =
+    ((requestResource).pure[Vector] ap Vector(5, 6, 7, 99, 1200, 8, 22)).separate
+  // partitionedResults: (Vector[(Int, String)], Vector[(Int, Long)]) = (
+  //   Vector(
+  //     (6, "Server error"),
+  //     (99, "Server error"),
+  //     (1200, "Bad request"),
+  //     (8, "Bad request")
+  //   ),
+  //   Vector((5, 200L), (7, 200L), (22, 200L))
+  // )
+}

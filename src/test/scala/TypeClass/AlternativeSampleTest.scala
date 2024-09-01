@@ -30,4 +30,36 @@ class AlternativeSampleTest extends AnyFlatSpec {
     val actual: Seq[Int] = Vector(14, 16, 12, 13)
     assert(actual === AlternativeSample.apForVectors)
   }
+
+  behavior of "Alternativeを実装したデコーダーTest"
+
+  it should "555" in {
+    val actual = Right(555)
+    assert(actual === Alternativeを実装したDecoderを使ってみる.decoder.decode("555"))
+  }
+
+  it should "5a" in {
+    val actual = Right(10)
+    assert(actual === Alternativeを実装したDecoderを使ってみる.decoder.decode("5a"))
+  }
+
+  behavior of "Alternativeでリクエストの結果をパーティショニングtest"
+
+  it should "Vector[(Int, String)]とVector[(Int, Long)]のタプルを分類" in {
+    val actual =
+      (
+        // リクエスト失敗したやつら
+        Vector(
+          (6, "Server error"),
+          (99, "Server error"),
+          (1200, "Bad request"),
+          (8, "Bad request")
+        ),
+        // リクエスト成功したやつら
+        Vector((5, 200L), (7, 200L), (22, 200L))
+      )
+
+    assert(actual === Alternativeでリクエストの結果をパーティショニング.partitionedResults)
+  }
+
 }
