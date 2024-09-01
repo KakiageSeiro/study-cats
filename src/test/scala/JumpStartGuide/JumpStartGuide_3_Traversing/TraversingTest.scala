@@ -1,14 +1,14 @@
-package JumpStartGuide_3_Traversing
+package JumpStartGuide.JumpStartGuide_3_Traversing
 
+import JumpStartGuide.JumpStartGuide_3_Traversing.{Traversing, User}
 import org.scalatest.concurrent.{ScalaFutures, TimeLimits}
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.funsuite.AnyFunSuiteLike
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Try}
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class TraversingTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFutures {
   "updateUsersで" should "Future[List[User]]が返ってくる" in {

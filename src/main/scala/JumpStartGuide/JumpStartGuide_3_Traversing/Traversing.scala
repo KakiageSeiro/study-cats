@@ -1,4 +1,4 @@
-package JumpStartGuide_3_Traversing
+package JumpStartGuide.JumpStartGuide_3_Traversing
 
 import cats.syntax.all.*
 

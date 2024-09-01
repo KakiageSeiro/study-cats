@@ -1,5 +1,6 @@
-package JumpStartGuide_2_Tuples
+package JumpStartGuide
 
+import JumpStartGuide.JumpStartGuide_2_Tuples.{Tuples, User}
 import org.scalatest.concurrent.{ScalaFutures, TimeLimits}
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec

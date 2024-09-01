@@ -1,11 +1,12 @@
-package JumpStartGuide_1_OptionHelpers;
+package JumpStartGuide.JumpStartGuide_1_OptionHelpers
 
+import JumpStartGuide.JumpStartGuide_1_OptionHelpers.{Account, DummyAccountServiceImpl}
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
 
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.DurationInt
+import scala.concurrent.{Await, Future}
 
 class DummyAccountServiceImplTest
     extends AnyFlatSpec

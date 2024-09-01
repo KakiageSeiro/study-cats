@@ -1,0 +1,5 @@
+package SyntacticSugar
+
+object <+> {
+
+}

@@ -1,4 +1,4 @@
-package JumpStartGuide_2_Tuples
+package JumpStartGuide.JumpStartGuide_2_Tuples
 
 import cats.implicits.catsSyntaxTuple3Semigroupal
 

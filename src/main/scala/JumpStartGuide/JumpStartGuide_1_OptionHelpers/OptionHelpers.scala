@@ -1,6 +1,6 @@
-package JumpStartGuide_1_OptionHelpers
+package JumpStartGuide.JumpStartGuide_1_OptionHelpers
 
-import JumpStartGuide_1_OptionHelpers.OptionHelpers.ToFutureSuccessful
+import OptionHelpers.ToFutureSuccessful
 
 import scala.concurrent.Future
 

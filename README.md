@@ -35,6 +35,6 @@
   つまり、`⊕`や`⊙`はあくまで一般的な記号であり、具体的にどの演算を表すかはコンテクストによって変わります。抽象代数などの分野ではこのような一般化された記号が多用されています。
 
 # Tutorials(ドキュメント読んだらこれをやろう)
-- [herding cats](http://eed3si9n.com/herding-cats/) by Eugene Yokota
-- [Scala Exercises](https://www.scala-exercises.org/cats) by 47 Degrees offers multiple online exercises to learn about the type classes and datatypes included in Cats.
+- [herding cats](http://eed3si9n.com/herding-cats/) by Eugene Yokota
+- [Scala Exercises](https://www.scala-exercises.org/cats) by 47 Degrees offers multiple online exercises to learn about the type classes and datatypes included in Cats.
 
