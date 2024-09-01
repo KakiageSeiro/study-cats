@@ -17,6 +17,13 @@ object AlternativeSample {
   // それだと|+|はどうなる？って思ったけどVector(7, 8)だった。Vectorだと同じ実装ってことかも
   val concatenated2: Vector[Int] = 7.pure[Vector] |+| 8.pure[Vector]
 
+  // よくよくドキュメントをみたら、Alternativeを実装したパーサーのサンプルで以下のようにcombineK(<+>がシュガーシンタックス)をユーザー定義したから「最初に成功するやつを選ぶ」挙動にしている
+  // def combineK[A](l: Decoder[A], r: Decoder[A]): Decoder[A] =
+  //     new Decoder[A] {
+  //       def decode(in: String) = l.decode(in).orElse(r.decode(in))
+  //     }
+  // というわけで、サンプルのパーサーは自分で定義した挙動、Optionは最初に成功するやつを選ぶような実装、VectorはaddAllって事だと思う
+
   val double: Int => Int = _ * 2
   // <function1>
 
