@@ -1,6 +1,6 @@
 package TypeClass
 
-import cats.MonadError
+import cats.ApplicativeError
 
 object MonadErrorSample {
   // 最寄りの都市を座標から取得するサンプル。結果はハードコーディング
