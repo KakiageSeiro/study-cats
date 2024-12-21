@@ -1,4 +1,4 @@
-package TypeClass
+package _3_TypeClass
 
 import cats.ApplicativeError
 

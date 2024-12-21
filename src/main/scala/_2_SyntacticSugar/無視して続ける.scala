@@ -1,4 +1,4 @@
-package SyntacticSugar
+package _2_SyntacticSugar
 
 import cats.effect.IO
 

@@ -1,6 +1,6 @@
-package JumpStartGuide.JumpStartGuide_1_OptionHelpers
+package _1_JumpStartGuide.JumpStartGuide_1_OptionHelpers
 
-import JumpStartGuide.JumpStartGuide_1_OptionHelpers.{Account, DummyAccountServiceImpl}
+import _1_JumpStartGuide.JumpStartGuide_1_OptionHelpers.{Account, DummyAccountServiceImpl}
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
