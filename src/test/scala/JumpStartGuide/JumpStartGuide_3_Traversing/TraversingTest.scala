@@ -1,6 +1,6 @@
-package _1_JumpStartGuide.JumpStartGuide_3_Traversing
+package JumpStartGuide.JumpStartGuide_3_Traversing
 
-import _1_JumpStartGuide.JumpStartGuide_3_Traversing.{Traversing, User}
+import JumpStartGuide.JumpStartGuide_3_Traversing.{Traversing, User}
 import org.scalatest.concurrent.{ScalaFutures, TimeLimits}
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec

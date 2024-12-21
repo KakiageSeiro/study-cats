@@ -1,4 +1,4 @@
-package _3_TypeClass
+package TypeClass
 
 import cats.ApplicativeError
 import cats.instances.either.*

@@ -1,4 +1,4 @@
-package _3_TypeClass
+package TypeClass
 
 import cats.data.Kleisli
 import cats.syntax.all.*

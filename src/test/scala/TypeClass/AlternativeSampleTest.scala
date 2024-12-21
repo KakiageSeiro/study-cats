@@ -1,4 +1,4 @@
-package _3_TypeClass
+package TypeClass
 
 import org.scalatest.flatspec.AnyFlatSpec
 

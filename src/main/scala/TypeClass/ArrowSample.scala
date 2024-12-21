@@ -1,11 +1,11 @@
-package _3_TypeClass
+package TypeClass
 
 import cats.arrow.Arrow
 import cats.syntax.all.*
 
 object ArrowSample {
 
-  // F[_, _]がArrowのとき
+  // F[_, _]はArrowなので
   // fab:F[A, B]は「Aを引数にBを返す」関数ってこと
   // fac:F[A, C]は「Aを引数にCを返す」関数ってこと
   // combine関数はfabとfacを合成した「Aを引数にBとCのタプルを返す」関数を作る
