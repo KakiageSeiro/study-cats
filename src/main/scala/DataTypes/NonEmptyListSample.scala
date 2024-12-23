@@ -2,9 +2,6 @@ package DataTypes
 
 import cats.data.NonEmptyList
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-
 // 要素が一つ必ずあるListのことだよ
 // NonEmptyList[+A](head: A, tail: List[A])のことだぞ
 
