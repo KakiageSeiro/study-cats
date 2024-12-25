@@ -82,9 +82,9 @@ sealed trait FormValidator {
   }
 
 }
+object FormValidator extends FormValidator
 
 // Validatedをつかう版はこちら
-object FormValidator extends FormValidator
 // .toValidatedでEitherをValidatedにできる
 def validateUserName(userName: String): Validated[DomainValidation, String] = FormValidator.validateUserName(userName).toValidated
 def validatePassword(password: String): Validated[DomainValidation, String] = FormValidator.validatePassword(password).toValidated
@@ -122,4 +122,6 @@ sealed trait FormValidatorNec {
   }
 }
 
+// 利用側でimportするためにobjectにしてるっぽい。そもそもtraitでなくobjectとして定義すれば良いのでは？
+// たぶんバリデータをextentsした別のバリデーションが必要かも知れないことの考慮、たとえば管理者権限のユーザーを登録する場合は、さらにフォームの項目が増えるなどの場合を考慮してtraitにしてるかも？
 object FormValidatorNec extends FormValidatorNec
