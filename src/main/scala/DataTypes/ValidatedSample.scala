@@ -118,7 +118,7 @@ sealed trait FormValidatorNec {
       validatePassword(password),
       validateFirstName(firstName),
       validateLastName(lastName),
-      validateAge(age)).mapN(RegistrationData)
+      validateAge(age)).mapN(RegistrationData.apply)
   }
 }
 
