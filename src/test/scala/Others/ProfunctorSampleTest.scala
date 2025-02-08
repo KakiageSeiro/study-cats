@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 
 class ProfunctorSampleTest extends AnyFlatSpec with ScalaFutures with Matchers{
 
-  "divisionProgramAsync" should "割り切れる" in {
+  "ProfunctorSample" should "前処理と後処理も実行されている" in {
     val actualFuture: Double = ProfunctorSample.f()
     assert(actualFuture == 5.4)
   }
