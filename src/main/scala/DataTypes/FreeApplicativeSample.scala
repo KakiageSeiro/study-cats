@@ -43,8 +43,8 @@ val compiler = new FunctionK[ValidationOp, FromString] {
 }
 
 object FreeApplicativeSample {
-  // 変換を実行し、FromString[A] = String => Aを作る
-  // foldMapのfold要素は、複数の検証ロジックを単一の関数に折り畳む的なやつだと思う
+  // 変換を実行し、FromString[A] = String => Aを作る。ここで実行もしている
+  // foldMapのfold要素は、~~複数の検証ロジックを単一の関数に折り畳む的なやつだと思う~~ progがプログラムの順次処理なので、再起構造としてみなせてそれを折り畳む意味だったぽい
   // これで文字列を簡単に検証できる
   val validator: FromString[Boolean] = prog.foldMap[FromString](compiler)
 }
