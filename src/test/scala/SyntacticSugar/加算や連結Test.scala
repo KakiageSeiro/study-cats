@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class 加算や連結Test extends AnyFlatSpec {
 
-  behavior of "加算や連結Test"
+  behavior.of("加算や連結Test")
 
   it should "整数の加算" in {
     val actual: Int = 加算や連結.整数の加算()

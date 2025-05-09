@@ -30,7 +30,7 @@ object AlternativeSample {
   val addFive: Int => Int = _ + 5
   // <function1>
 
-  val apForVectors: Vector[Int] = (double.pure[Vector] <+> addFive.pure[Vector]) ap concatenated
+  val apForVectors: Vector[Int] = (double.pure[Vector] <+> addFive.pure[Vector]).ap(concatenated)
   // Vector(14, 16, 12, 13)
   // 7 * 2 = 14
   // 8 * 2 = 16
@@ -64,7 +64,7 @@ implicit val decoderAlternative: Alternative[Decoder] = new Alternative[Decoder]
 
   def ap[A, B](ff: Decoder[A => B])(fa: Decoder[A]): Decoder[B] =
     new Decoder[B] {
-      def decode(in: String) = fa.decode(in) ap ff.decode(in)
+      def decode(in: String) = fa.decode(in).ap(ff.decode(in))
     }
 }
 
@@ -92,7 +92,7 @@ object Alternativeでリクエストの結果をパーティショニング {
 
   // たくさんリクエストをして、結果を分類してみる
   val partitionedResults: (Vector[(Int, String)], Vector[(Int, Long)]) =
-    ((requestResource).pure[Vector] ap Vector(5, 6, 7, 99, 1200, 8, 22)).separate
+    ((requestResource).pure[Vector].ap(Vector(5, 6, 7, 99, 1200, 8, 22))).separate
   // partitionedResults: (Vector[(Int, String)], Vector[(Int, Long)]) = (
   //   Vector(
   //     (6, "Server error"),

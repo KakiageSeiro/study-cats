@@ -25,4 +25,4 @@ object Traversing {
     foo.sequence
   }
 }
-case class User(name: String){}
+case class User(name: String) {}

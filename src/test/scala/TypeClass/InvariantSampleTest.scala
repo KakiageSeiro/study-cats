@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class InvariantSampleTest extends AnyFlatSpec {
 
-  behavior of "AlternativeSampleTest"
+  behavior.of("AlternativeSampleTest")
 
   it should "combine" in {
     val actual: Wallet = Wallet(1499)

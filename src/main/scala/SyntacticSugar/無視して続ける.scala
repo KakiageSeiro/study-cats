@@ -9,7 +9,7 @@ import cats.effect.IO
 //   リソースの初期化をしたあとに、リソースを利用する処理(DBコネクションとかね)
 object 無視して続ける {
   def 左は無視(): Int = {
-    val log: IO[Unit] = IO(println("ログだしたよ..."))
+    val log: IO[Unit]        = IO(println("ログだしたよ..."))
     val computation: IO[Int] = IO.pure(111)
 
     // ログを出力してから計算を実行し、計算の結果だけを取る

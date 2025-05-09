@@ -7,7 +7,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class ShowSampleTest extends AnyFlatSpec {
 
-  behavior of "ShowSampleTest"
+  behavior.of("ShowSampleTest")
 
   it should "show" in {
     // == での比較

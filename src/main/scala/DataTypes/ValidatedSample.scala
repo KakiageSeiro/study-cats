@@ -2,7 +2,7 @@ package DataTypes
 
 import DataTypes.FormValidator.RegistrationData
 import cats.data.{Validated, ValidatedNec}
-import cats.implicits._
+import cats.implicits.*
 
 // Validatedは、バリデーションしたい条件や項目が複数ある場合に、満たしていないものを"全て"あつめてユーザーに見せる
 
@@ -16,7 +16,8 @@ case object UsernameHasSpecialCharacters extends DomainValidation {
 }
 
 case object PasswordDoesNotMeetCriteria extends DomainValidation {
-  def errorMessage: String = "Password must be at least 10 characters long, including an uppercase and a lowercase letter, one number and one special character."
+  def errorMessage: String =
+    "Password must be at least 10 characters long, including an uppercase and a lowercase letter, one number and one special character."
 }
 
 case object FirstNameHasSpecialCharacters extends DomainValidation {
@@ -71,13 +72,19 @@ sealed trait FormValidator {
   final case class RegistrationData(username: String, password: String, firstName: String, lastName: String, age: Int)
 
   // これはValidatedを使わないバリデーション処理。forはfail-fast(コケたらそこで終わる)なので、Usernameがだめだったら、passwordが良いかどうかはわからない
-  def validateForm(username: String, password: String, firstName: String, lastName: String, age: Int): Either[DomainValidation, RegistrationData] = {
+  def validateForm(
+    username:  String,
+    password:  String,
+    firstName: String,
+    lastName:  String,
+    age:       Int
+  ): Either[DomainValidation, RegistrationData] = {
     for {
-      validatedUserName <- validateUserName(username)
-      validatedPassword <- validatePassword(password)
+      validatedUserName  <- validateUserName(username)
+      validatedPassword  <- validatePassword(password)
       validatedFirstName <- validateFirstName(firstName)
-      validatedLastName <- validateLastName(lastName)
-      validatedAge <- validateAge(age)
+      validatedLastName  <- validateLastName(lastName)
+      validatedAge       <- validateAge(age)
     } yield RegistrationData(validatedUserName, validatedPassword, validatedFirstName, validatedLastName, validatedAge)
   }
 
@@ -86,10 +93,14 @@ object FormValidator extends FormValidator
 
 // Validatedをつかう版はこちら
 // .toValidatedでEitherをValidatedにできる
-def validateUserName(userName: String): Validated[DomainValidation, String] = FormValidator.validateUserName(userName).toValidated
-def validatePassword(password: String): Validated[DomainValidation, String] = FormValidator.validatePassword(password).toValidated
-def validateFirstName(firstName: String): Validated[DomainValidation, String] = FormValidator.validateFirstName(firstName).toValidated
-def validateLastName(lastName: String): Validated[DomainValidation, String] = FormValidator.validateLastName(lastName).toValidated
+def validateUserName(userName: String): Validated[DomainValidation, String] =
+  FormValidator.validateUserName(userName).toValidated
+def validatePassword(password: String): Validated[DomainValidation, String] =
+  FormValidator.validatePassword(password).toValidated
+def validateFirstName(firstName: String): Validated[DomainValidation, String] =
+  FormValidator.validateFirstName(firstName).toValidated
+def validateLastName(lastName: String): Validated[DomainValidation, String] =
+  FormValidator.validateLastName(lastName).toValidated
 def validateAge(age: Int): Validated[DomainValidation, Int] = FormValidator.validateAge(age).toValidated
 
 sealed trait FormValidatorNec {
@@ -113,12 +124,20 @@ sealed trait FormValidatorNec {
   private def validateAge(age: Int): ValidationResult[Int] =
     if (age >= 18 && age <= 75) age.validNec else AgeIsInvalid.invalidNec
 
-  def validateForm(username: String, password: String, firstName: String, lastName: String, age: Int): ValidationResult[RegistrationData] = {
-    (validateUserName(username),
+  def validateForm(
+    username:  String,
+    password:  String,
+    firstName: String,
+    lastName:  String,
+    age:       Int
+  ): ValidationResult[RegistrationData] = {
+    (
+      validateUserName(username),
       validatePassword(password),
       validateFirstName(firstName),
       validateLastName(lastName),
-      validateAge(age)).mapN(RegistrationData.apply)
+      validateAge(age)
+    ).mapN(RegistrationData.apply)
   }
 }
 

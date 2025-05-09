@@ -1,9 +1,7 @@
 package DataTypes
 
-import scala.concurrent.Future
-
-
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 // 先にEitherTを見た方が分かりやすいぞ
 
@@ -11,9 +9,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 val customGreeting: Future[Option[String]] = Future.successful(Some("welcome back, Lola"))
 
 val excitedGreeting: Future[Option[String]] = customGreeting.map(_.map(_ + "!"))
-val hasWelcome: Future[Option[String]] = customGreeting.map(_.filter(_.contains("welcome")))
-val noWelcome: Future[Option[String]] = customGreeting.map(_.filterNot(_.contains("welcome")))
-val withFallback: Future[String] = customGreeting.map(_.getOrElse("hello, there!"))
+val hasWelcome: Future[Option[String]]      = customGreeting.map(_.filter(_.contains("welcome")))
+val noWelcome: Future[Option[String]]       = customGreeting.map(_.filterNot(_.contains("welcome")))
+val withFallback: Future[String]            = customGreeting.map(_.getOrElse("hello, there!"))
 
 import cats.data.OptionT
 
@@ -21,19 +19,6 @@ import cats.data.OptionT
 val customGreetingT: OptionT[Future, String] = OptionT(customGreeting)
 
 val excitedGreeting_OptionT: OptionT[Future, String] = customGreetingT.map(_ + "!")
-val withWelcome_OptionT: OptionT[Future, String] = customGreetingT.filter(_.contains("welcome"))
-val noWelcome_OptionT: OptionT[Future, String] = customGreetingT.filterNot(_.contains("welcome"))
-val withFallback_OptionT: Future[String] = customGreetingT.getOrElse("hello, there!")
-
-
-
-
-
-
-
-
-
-
-
-
-
+val withWelcome_OptionT: OptionT[Future, String]     = customGreetingT.filter(_.contains("welcome"))
+val noWelcome_OptionT: OptionT[Future, String]       = customGreetingT.filterNot(_.contains("welcome"))
+val withFallback_OptionT: Future[String]             = customGreetingT.getOrElse("hello, there!")

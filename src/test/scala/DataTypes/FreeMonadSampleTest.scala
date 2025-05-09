@@ -8,7 +8,6 @@ import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Future
 
-
 class FreeMonadSampleTest extends AnyFlatSpec with ScalaFutures with Matchers {
 
   "kvsを動かす一連の操作が" should "が動く" in {

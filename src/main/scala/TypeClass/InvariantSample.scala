@@ -1,7 +1,7 @@
 package TypeClass
 
-import cats._
-import cats.syntax.all._
+import cats.*
+import cats.syntax.all.*
 
 // 定義はこちら。不変関手とも呼ぶ。
 // trait Invariant[F[_]] {

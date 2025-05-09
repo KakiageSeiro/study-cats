@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class AlternativeSampleTest extends AnyFlatSpec {
 
-  behavior of "AlternativeSampleTest"
+  behavior.of("AlternativeSampleTest")
 
   it should "empty" in {
     val actual: Seq[Int] = Vector()
@@ -31,7 +31,7 @@ class AlternativeSampleTest extends AnyFlatSpec {
     assert(actual === AlternativeSample.apForVectors)
   }
 
-  behavior of "Alternativeを実装したデコーダーTest"
+  behavior.of("Alternativeを実装したデコーダーTest")
 
   it should "555" in {
     val actual = Right(555)
@@ -43,7 +43,7 @@ class AlternativeSampleTest extends AnyFlatSpec {
     assert(actual === Alternativeを実装したDecoderを使ってみる.decoder.decode("5a"))
   }
 
-  behavior of "Alternativeでリクエストの結果をパーティショニングtest"
+  behavior.of("Alternativeでリクエストの結果をパーティショニングtest")
 
   it should "Vector[(Int, String)]とVector[(Int, Long)]のタプルを分類" in {
     val actual =

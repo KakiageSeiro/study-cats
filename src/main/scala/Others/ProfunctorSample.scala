@@ -1,7 +1,7 @@
 package Others
 
 import cats.arrow.Profunctor
-import cats.instances.function._ // Function1 のインスタンスが入っている
+import cats.instances.function.* // Function1 のインスタンスが入っている
 
 object ProfunctorSample {
   // // この関数に対して、前処理と後処理を作っていくよ
@@ -15,7 +15,6 @@ object ProfunctorSample {
   //
   // // Profunctor[Int, String, Double, Int].dimap(f)(f2)(f3)
   // // val f4: Double => Int = Profunctor[Function1].dimap(f)(_.toInt)(_.length)
-
 
   def f(): Double = {
     // この関数に対して、前処理と後処理を作っていくよ

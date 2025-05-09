@@ -8,8 +8,8 @@ import cats.implicits.*
 // 今までifや三項演算子でやってたことが簡単に
 // Optionは失敗した情報がないので捨てていいことを、良い感じに利用してる→Eitherには向かなそう
 object Optionで最初に成功するやつを選ぶ {
-  private val opt1 = Option(1)
-  private val opt2 = Option(2)
+  private val opt1                 = Option(1)
+  private val opt2                 = Option(2)
   private val optNone: Option[Int] = None
 
   def opt1が成功(): Option[Int] = {

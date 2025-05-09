@@ -17,8 +17,8 @@ object ApplicativeErrorSample {
   val error: ErrorOr[Int] = applicativeError.raiseError("Something went wrong")
 
   // エラー型を処理するときにhandleErrorWithをつかう(E => Aの関数を取るhandleErrorというのもあるよ)
-  val handled: ErrorOr[Int] = applicativeError.handleErrorWith(error) {
-    case "Something went wrong" => Right(0) // サンプルなのでdefault値を返すってことで
+  val handled: ErrorOr[Int] = applicativeError.handleErrorWith(error) { case "Something went wrong" =>
+    Right(0) // サンプルなのでdefault値を返すってことで
   }
 
   // 計算を実行

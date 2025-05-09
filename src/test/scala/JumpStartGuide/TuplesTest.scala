@@ -35,7 +35,7 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
   }
 
   "intFutureFailureで" should "エラーメッセージが返ってくる" in {
-    val futureInt = Tuples.intFutureFailure
+    val futureInt        = Tuples.intFutureFailure
     val result: Try[Int] = futureInt.value.get
 
     result match {
@@ -48,7 +48,7 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
   }
 
   "stringFutureFailureで" should "エラーメッセージが返ってくる" in {
-    val futureInt = Tuples.stringFutureFailure
+    val futureInt           = Tuples.stringFutureFailure
     val result: Try[String] = futureInt.value.get
 
     result match {
@@ -61,10 +61,10 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
   }
 
   "processで" should "ProcessingResultが返ってくる" in {
-    val value = 42
+    val value    = 42
     val contents = "Hello"
-    val user = new User("Jane")
-    val result = Tuples.process(value, contents, user)
+    val user     = new User("Jane")
+    val result   = Tuples.process(value, contents, user)
     assert(result.value == value)
     assert(result.contents == contents)
     assert(result.userName == user.name)
@@ -102,7 +102,7 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
 
   "processAsync2IntFailureで" should "IntFutureFailureのエラーが返ってくる" in {
     val futureResult = Tuples.processAsync2IntFailure
-    val result = futureResult.value.get
+    val result       = futureResult.value.get
 
     result match {
       case Failure(ex: Throwable) =>
@@ -117,7 +117,7 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
   // それにもやっとしたのでテストで非同期処理を待機しようとしたが、上手くいかなかった…
   "processAsync2IntAndStringFailureで" should "IntFutureFailureのエラーが返ってくる" in {
     val futureResult = Tuples.processAsync2IntAndStringFailure
-    val result = futureResult.value.get
+    val result       = futureResult.value.get
 
     result match {
       case Failure(ex: Throwable) =>
@@ -128,7 +128,6 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
     }
   }
 
-
   // 非同期処理を待機しようとしてもがいたコード
 //  "processAsync2IntAndStringFailureで" should "IntとStringのFutureFailureのエラーが返ってくる" in {
 //    val futureResult: Future[Tuples.ProcessingResult] = Tuples.processAsync2IntAndStringFailure
@@ -136,7 +135,5 @@ class TuplesTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFut
 //    assert(futureResult.failed.futureValue.isInstanceOf[RuntimeException])
 //    assert(futureResult.failed.futureValue.getMessage == "何かが失敗2")
 //  }
-
-
 
 }

@@ -1,13 +1,12 @@
 package DataTypes
 
+import cats.data.Const
+import cats.syntax.all.*
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import cats.data.Const
-import cats.syntax.all.*
 
 import scala.concurrent.Future
-
 
 class FreeApplicativeSampleTest extends AnyFlatSpec with ScalaFutures with Matchers {
 
@@ -18,7 +17,9 @@ class FreeApplicativeSampleTest extends AnyFlatSpec with ScalaFutures with Match
 
   "Log" should "が動く" in {
     assert(FreeApplicativeSample_Log.logValidation_prog() == List("size >= 5", "has number"))
-    assert(FreeApplicativeSample_Log.logValidation_size_hasNumber_size() == List("size >= 5", "has number", "size >= 10"))
+    assert(
+      FreeApplicativeSample_Log.logValidation_size_hasNumber_size() == List("size >= 5", "has number", "size >= 10")
+    )
     assert(FreeApplicativeSample_Log.logValidation_map2() == List("has number", "size >= 3"))
   }
 
@@ -37,14 +38,15 @@ class FreeApplicativeSampleTest extends AnyFlatSpec with ScalaFutures with Match
   //   logsValid shouldEqual List("size >= 5", "has number")
   // }
 
-
   "並列とログを両方やる" should "バリデーションとログ集めを両方やれている" in {
     // ValidateAndLog[A]はTuple2K[ParValidator, Log, A] なので、まずはそれを実行するヘルパーを定義
-    def runValidateAndLog[A](valAndLog: FreeApplicativeSample_Par_Log.ValidateAndLog[A])(input: String): Future[(A, List[String])] = {
+    def runValidateAndLog[A](
+      valAndLog: FreeApplicativeSample_Par_Log.ValidateAndLog[A]
+    )(input: String): Future[(A, List[String])] = {
       implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
       val validator: ParValidator[A] = valAndLog.first
-      val log: Log[A] = valAndLog.second
+      val log: Log[A]                = valAndLog.second
 
       // Kleisli[Future, String, A] は String => Future[A] のラッパー
       // validatorはKleisli[Future, String, A]なので、run(input)でFuture[A]を取れる

@@ -1,6 +1,6 @@
 package JumpStartGuide.JumpStartGuide_1_OptionHelpers
 
-import OptionHelpers.ToFutureSuccessful
+import JumpStartGuide.JumpStartGuide_1_OptionHelpers.OptionHelpers.ToFutureSuccessful
 
 import scala.concurrent.Future
 
@@ -18,7 +18,7 @@ object OptionHelpers {
 case class Account(name: Option[String]) {
   def some(): Option[Account] = name match {
     case Some(value) => Some(Account(name))
-    case None => None
+    case None        => None
   }
 }
 
@@ -32,4 +32,3 @@ class DummyAccountServiceImpl extends AccountService {
 
   override def getAccountById(id: Int): Future[Option[Account]] = dummyAccount.some().asFuture
 }
-

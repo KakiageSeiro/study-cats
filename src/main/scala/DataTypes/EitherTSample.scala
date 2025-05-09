@@ -2,8 +2,8 @@ package DataTypes
 
 import cats.data.EitherT
 
-import scala.util.Try
 import scala.concurrent.Future
+import scala.util.Try
 
 // EitherTはflatMap2回やらなきゃいけないところを、一回でいいぜ君だ
 // どうせこのあとflatMapするんでしょ君と思ってもいい
@@ -26,12 +26,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 // Future[Either[]]だとforできれいに書けないよね。のサンプル
 object EitherTSample {
   def divisionProgramAsync(inputA: String, inputB: String): Future[Either[String, Double]] =
-    parseDoubleAsync(inputA) flatMap { eitherA =>
-      parseDoubleAsync(inputB) flatMap { eitherB =>
+    parseDoubleAsync(inputA).flatMap { eitherA =>
+      parseDoubleAsync(inputB).flatMap { eitherB =>
         (eitherA, eitherB) match {
           case (Right(a), Right(b)) => divideAsync(a, b)
-          case (Left(err), _) => Future.successful(Left(err))
-          case (_, Left(err)) => Future.successful(Left(err))
+          case (Left(err), _)       => Future.successful(Left(err))
+          case (_, Left(err))       => Future.successful(Left(err))
         }
       }
     }
@@ -39,8 +39,8 @@ object EitherTSample {
   // EitherTをつかうとスッキリ
   def divisionProgramAsync_EitherT(inputA: String, inputB: String): EitherT[Future, String, Double] =
     for {
-      a <- EitherT(parseDoubleAsync(inputA))
-      b <- EitherT(parseDoubleAsync(inputB))
+      a      <- EitherT(parseDoubleAsync(inputA))
+      b      <- EitherT(parseDoubleAsync(inputB))
       result <- EitherT(divideAsync(a, b))
     } yield result
 }

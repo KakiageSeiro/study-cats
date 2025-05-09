@@ -8,10 +8,10 @@ import scala.math.sqrt
 // Writerはログと値をもつタプルのラッパー
 // https://typelevel.org/cats/datatypes/writer.html の一番したに書いてあったサンプルがパッと理解できなかったので書く
 
-val writer1_ログと値: Writer[String, Double] = Writer.value[String, Double](5.0).tell("Initial value ")
-val writer2_ログと平方根の関数: Writer[String, Double => Double] = Writer("sqrt ", (i: Double) => sqrt(i))
+val writer1_ログと値: Writer[String, Double]                                 = Writer.value[String, Double](5.0).tell("Initial value ")
+val writer2_ログと平方根の関数: Writer[String, Double => Double]                  = Writer("sqrt ", (i: Double) => sqrt(i))
 val writer3_Doubleからログとたし算のWriterを返す関数: Double => Writer[String, Double] = (x: Double) => Writer("add 1 ", x + 1)
-val writer4_ログとDoubleを2で割る関数: Writer[String, Double => Double] = Writer("divided by 2 ", (x: Double) => x / 2)
+val writer4_ログとDoubleを2で割る関数: Writer[String, Double => Double]           = Writer("divided by 2 ", (x: Double) => x / 2)
 
 val writer5: Writer[String, Double => Double] = {
   // ログだけ取ったやつ
@@ -21,7 +21,8 @@ val writer5: Writer[String, Double => Double] = {
   val doubleToValue: Double => Id[Double] = (x: Double) => writer3_Doubleからログとたし算のWriterを返す関数(x).value
 
   Writer[String, Double => Double](
-    written, doubleToValue
+    written,
+    doubleToValue
   )
 }
 
@@ -45,16 +46,15 @@ object WriterSample {
   // writer1_ログと値.ap(writer2_ログと平方根の関数) で引数が先に評価されるのは直感に合う
   // というわけでモナドを使うのが下の例ってわけ
 
-
   /// >>>という記号(andThenと同じ)用
   import cats.syntax.compose.*
 
   (
     for {
-    initialValue <- writer1_ログと値
-    sqrt <- writer2_ログと平方根の関数
-    addOne <- writer5
-    divideBy2 <- writer4_ログとDoubleを2で割る関数
+      initialValue <- writer1_ログと値
+      sqrt         <- writer2_ログと平方根の関数
+      addOne       <- writer5
+      divideBy2    <- writer4_ログとDoubleを2で割る関数
     } yield (sqrt >>> addOne >>> divideBy2)(initialValue)
   ).run
 

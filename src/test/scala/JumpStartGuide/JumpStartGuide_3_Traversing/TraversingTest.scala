@@ -12,7 +12,7 @@ import scala.util.{Failure, Try}
 
 class TraversingTest extends AnyFlatSpec with Diagrams with TimeLimits with ScalaFutures {
   "updateUsersで" should "Future[List[User]]が返ってくる" in {
-    val users = List(User("tako"), User("ika"), User("kani"))
+    val users                            = List(User("tako"), User("ika"), User("kani"))
     val futureString: Future[List[User]] = Traversing.updateUsers(users)
     futureString.map { userList =>
       assert(userList.length == 3)

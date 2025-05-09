@@ -8,8 +8,7 @@ class FreeApplicativeSample
 // 文字列検証の代数を定義
 sealed abstract class ValidationOp[A]
 case class Size(size: Int) extends ValidationOp[Boolean] // サイズの検証用
-case object HasNumber extends ValidationOp[Boolean] // 数字を含んでいることの検証用
-
+case object HasNumber      extends ValidationOp[Boolean] // 数字を含んでいることの検証用
 
 // FreeApplicativeを作るよ
 import cats.free.FreeApplicative
@@ -49,12 +48,6 @@ object FreeApplicativeSample {
   val validator: FromString[Boolean] = prog.foldMap[FromString](compiler)
 }
 
-
-
-
-
-
-
 // ----------------------------------並列処理ができる
 import cats.data.Kleisli
 
@@ -67,17 +60,14 @@ type ParValidator[A] = Kleisli[Future, String, A]
 val parCompiler = new FunctionK[ValidationOp, ParValidator] {
   def apply[A](fa: ValidationOp[A]): ParValidator[A] = Kleisli { str =>
     fa match {
-      case Size(size) => Future { str.size >= size }                         // ここがFutureだから並列にできるぞ！
-      case HasNumber => Future { str.exists(c => "0123456789".contains(c)) } // ここがFutureだから並列にできるぞ！
+      case Size(size) => Future { str.size >= size }                          // ここがFutureだから並列にできるぞ！
+      case HasNumber  => Future { str.exists(c => "0123456789".contains(c)) } // ここがFutureだから並列にできるぞ！
     }
   }
 }
 
 // ここでfoldMapする時に、Futureだから並列に処理できる
 val parValidator: ParValidator[Boolean] = prog.foldMap[ParValidator](parCompiler)
-
-
-
 
 // ---------------------------------どのバリデーションがされたかをログにだすケースの使い方？
 import cats.data.Const
@@ -90,7 +80,7 @@ type Log[A] = Const[List[String], A]
 val logCompiler = new FunctionK[ValidationOp, Log] {
   def apply[A](fa: ValidationOp[A]): Log[A] = fa match {
     case Size(size) => Const(List(s"size >= $size"))
-    case HasNumber => Const(List("has number"))
+    case HasNumber  => Const(List("has number"))
   }
 }
 
@@ -100,34 +90,24 @@ object FreeApplicativeSample_Log {
 
   def logValidation_prog(): Seq[String] =
     logValidation(prog)
-    // res2: List[String] = List("size >= 5", "has number")
+  // res2: List[String] = List("size >= 5", "has number")
 
   // *> は「前の結果を捨てて次に進む」というシーケンス演算子
   def logValidation_size_hasNumber_size(): Seq[String] =
     logValidation(size(5) *> hasNumber *> size(10))
-    // res3: List[String] = List("size >= 5", "has number", "size >= 10")
+  // res3: List[String] = List("size >= 5", "has number", "size >= 10")
 
   // || で論理和ととってるが、意味はなくて呼び出されていることだけ確認する
   def logValidation_map2(): Seq[String] =
     logValidation((hasNumber, size(3)).mapN(_ || _))
-    // res4: List[String] = List("has number", "size >= 3")
+  // res4: List[String] = List("has number", "size >= 3")
 }
-
 
 // ----------------------------------------並列のログの解釈器を合成できる
 import cats.data.Tuple2K
 
 object FreeApplicativeSample_Par_Log {
   type ValidateAndLog[A] = Tuple2K[ParValidator, Log, A]
-  val prodCompiler: FunctionK[ValidationOp, ValidateAndLog] = parCompiler and logCompiler
-  val prodValidation: ValidateAndLog[Boolean] = prog.foldMap[ValidateAndLog](prodCompiler)
+  val prodCompiler: FunctionK[ValidationOp, ValidateAndLog] = parCompiler.and(logCompiler)
+  val prodValidation: ValidateAndLog[Boolean]               = prog.foldMap[ValidateAndLog](prodCompiler)
 }
-
-
-
-
-
-
-
-
-

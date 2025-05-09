@@ -51,9 +51,9 @@ object Tuples {
   // これはmapNを使っていない。なのでforによってflatMapになるので非同期に動作しない
   def processAsync3: Future[ProcessingResult] = {
     for {
-      value <- intFuture
+      value    <- intFuture
       contents <- stringFuture
-      user <- userFuture
+      user     <- userFuture
     } yield process(value, contents, user)
   }
 
@@ -80,9 +80,7 @@ object Tuples {
     new ProcessingResult(value, contents, user.name)
   }
 
-  class ProcessingResult(val value: Int,
-                         val contents: String,
-                         val userName: String)
+  class ProcessingResult(val value: Int, val contents: String, val userName: String)
 }
 
 class User(val name: String)

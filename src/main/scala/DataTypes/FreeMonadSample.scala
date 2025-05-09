@@ -8,8 +8,8 @@ package DataTypes
 // KVSの操作を定義
 sealed trait KVStoreA[A]
 case class Put[T](key: String, value: T) extends KVStoreA[Unit]
-case class Get[T](key: String) extends KVStoreA[Option[T]]
-case class Delete(key: String) extends KVStoreA[Unit]
+case class Get[T](key: String)           extends KVStoreA[Option[T]]
+case class Delete(key: String)           extends KVStoreA[Unit]
 
 // 上でつくった代数的データをFreeing(解法？)するステップ
 // 1. Free[_]とKVStoreA[_]に基づいて型を作成する。
@@ -39,7 +39,7 @@ def delete(key: String): KVStore[Unit] =
 def update[T](key: String, f: T => T): KVStore[Unit] =
   for {
     vMaybe <- get[T](key)
-    _ <- vMaybe.map(v => put[T](key, f(v))).getOrElse(Free.pure(()))
+    _      <- vMaybe.map(v => put[T](key, f(v))).getOrElse(Free.pure(()))
   } yield ()
 
 // 3. キーバリューDSL操作からプログラムを構築する。---------------------------------------------------------
@@ -53,7 +53,6 @@ def program: KVStore[Option[Int]] =
     _ <- delete("tame-cats")
   } yield n
 
-
 // 4. DSL操作のプログラムのコンパイラを作る。---------------------------------------------------------------------------------------
 
 // Free[_]はプログラミング言語の中のプログラミング言語
@@ -64,11 +63,12 @@ def program: KVStore[Option[Int]] =
 // この特定の変換は、FunctionK[F,G]を使う。F ~> Gと書ける
 import cats.arrow.FunctionK
 import cats.{Id, ~>}
+
 import scala.collection.mutable
 
 // 型が正しく指定されていない場合、プログラムがクラッシュするぞ
 // Idはモナドを使いたいためだけのラッパー？として使っている。ここではKVStoreAというDSLを、Scalaのモナドにしたい意図
-def impureCompiler: KVStoreA ~> Id  = new (KVStoreA ~> Id) {
+def impureCompiler: KVStoreA ~> Id = new (KVStoreA ~> Id) {
   val kvs = mutable.Map.empty[String, Any]
 
   // コンパイルとは、定義したDSLをScalaでどのように実行するかを定義したものと覚えるとよさそう
@@ -87,7 +87,6 @@ def impureCompiler: KVStoreA ~> Id  = new (KVStoreA ~> Id) {
         ()
     }
 }
-
 
 // 3.で定義したprogramは再起構造として表現できるのでfoldMapで折り畳める
 // 各DSLの操作を消費する(消費はDSLを読み込むみたいな意だと思う)

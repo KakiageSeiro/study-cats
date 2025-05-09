@@ -14,14 +14,14 @@ class EitherTSampleTest extends AnyFlatSpec with ScalaFutures with Matchers {
     val actualFuture: Future[Either[String, Double]] = divisionProgramAsync("4", "2")
     // Futureのテストをするときは、まだ終わってない場合はNoneになってしまうのでwhenReadyで待つ
     whenReady(actualFuture) { actual =>
-      actual should be (Right(2.0))
+      actual should be(Right(2.0))
     }
   }
 
   it should "パースできなかった" in {
     val actualFuture: Future[Either[String, Double]] = divisionProgramAsync("a", "b")
     whenReady(actualFuture) { actual =>
-      actual should be (Left("a is not a number"))
+      actual should be(Left("a is not a number"))
     }
   }
 
@@ -30,14 +30,14 @@ class EitherTSampleTest extends AnyFlatSpec with ScalaFutures with Matchers {
     // EitherT[Future, String, Double]はFuture[Either[String, Double]]のラッパーなのだ
     val actualFuture: Future[Either[String, Double]] = divisionProgramAsync_EitherT("4", "2").value
     whenReady(actualFuture) { actual =>
-      actual should be (Right(2.0))
+      actual should be(Right(2.0))
     }
   }
 
   it should "パースできなかった" in {
     val actualFuture: Future[Either[String, Double]] = divisionProgramAsync_EitherT("a", "b").value
     whenReady(actualFuture) { actual =>
-      actual should be (Left("a is not a number"))
+      actual should be(Left("a is not a number"))
     }
   }
 }

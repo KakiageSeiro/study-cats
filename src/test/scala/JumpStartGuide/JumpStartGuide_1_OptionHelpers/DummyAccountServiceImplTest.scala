@@ -8,15 +8,12 @@ import org.scalatest.flatspec.AnyFlatSpec
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 
-class DummyAccountServiceImplTest
-    extends AnyFlatSpec
-    with Diagrams
-    with TimeLimits {
+class DummyAccountServiceImplTest extends AnyFlatSpec with Diagrams with TimeLimits {
 
   "getAccountByIdで" should "Future[Option[Account]]が返ってくる" in {
-    val service = new DummyAccountServiceImpl()
+    val service                                = new DummyAccountServiceImpl()
     val futureAccount: Future[Option[Account]] = service.getAccountById(1)
-    val account: Option[Account] = Await.result(futureAccount, 1.second)
+    val account: Option[Account]               = Await.result(futureAccount, 1.second)
 
     assert(account.contains(service.dummyAccount))
   }

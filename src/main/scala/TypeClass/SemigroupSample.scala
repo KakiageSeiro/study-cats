@@ -17,9 +17,8 @@ object SemigroupSample {
   intAdditionSemigroup.combine(x, y)
   // Int = 3
 
-
   // 専用のシンタックスがあるぞ
-  import cats.syntax.all._
+  import cats.syntax.all.*
   1 |+| 2
   // res4: Int = 3
 }

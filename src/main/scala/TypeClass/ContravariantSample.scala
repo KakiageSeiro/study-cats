@@ -1,7 +1,7 @@
 package TypeClass
 
-import cats._
-import cats.syntax.all._
+import cats.*
+import cats.syntax.all.*
 
 // 定義はこちら。反変関手とも呼ぶ。
 // Functorの逆であるcontramapをもってる。fがB => Aになっている
@@ -10,7 +10,7 @@ import cats.syntax.all._
 // }
 
 import cats.Show
-import cats.instances.string._
+import cats.instances.string.*
 
 case class Person(name: String, age: Int)
 
