@@ -8,17 +8,17 @@ import scala.math.sqrt
 // Writerはログと値をもつタプルのラッパー
 // https://typelevel.org/cats/datatypes/writer.html の一番したに書いてあったサンプルがパッと理解できなかったので書く
 
-val writer1_ログと値: Writer[String, Double]                                 = Writer.value[String, Double](5.0).tell("Initial value ")
-val writer2_ログと平方根の関数: Writer[String, Double => Double]                  = Writer("sqrt ", (i: Double) => sqrt(i))
-val writer3_Doubleからログとたし算のWriterを返す関数: Double => Writer[String, Double] = (x: Double) => Writer("add 1 ", x + 1)
-val writer4_ログとDoubleを2で割る関数: Writer[String, Double => Double]           = Writer("divided by 2 ", (x: Double) => x / 2)
+val writer1: Writer[String, Double]           = Writer.value[String, Double](5.0).tell("Initial value ")
+val writer2: Writer[String, Double => Double] = Writer("sqrt ", (i: Double) => sqrt(i))
+val writer3: Double => Writer[String, Double] = (x: Double) => Writer("add 1 ", x + 1)
+val writer4: Writer[String, Double => Double] = Writer("divided by 2 ", (x: Double) => x / 2)
 
 val writer5: Writer[String, Double => Double] = {
   // ログだけ取ったやつ
-  val written: Id[String] = writer3_Doubleからログとたし算のWriterを返す関数(0).written
+  val written: Id[String] = writer3(0).written
 
   // たし算関数だけ取ったやつ
-  val doubleToValue: Double => Id[Double] = (x: Double) => writer3_Doubleからログとたし算のWriterを返す関数(x).value
+  val doubleToValue: Double => Id[Double] = (x: Double) => writer3(x).value
 
   Writer[String, Double => Double](
     written,
@@ -30,10 +30,10 @@ object WriterSample {
   // Pay attention on the ordering of the logs
   // ログの順序に注意
 
-  writer1_ログと値
-    .ap(writer2_ログと平方根の関数)
-    .flatMap(writer3_Doubleからログとたし算のWriterを返す関数(_))
-    .ap(writer4_ログとDoubleを2で割る関数)
+  writer1
+    .ap(writer2)
+    .flatMap(writer3(_))
+    .ap(writer4)
     .map(_.toString)
     .run
   // res10: cats.package.Id[(String, String)] = (
@@ -51,10 +51,10 @@ object WriterSample {
 
   (
     for {
-      initialValue <- writer1_ログと値
-      sqrt         <- writer2_ログと平方根の関数
+      initialValue <- writer1
+      sqrt         <- writer2
       addOne       <- writer5
-      divideBy2    <- writer4_ログとDoubleを2で割る関数
+      divideBy2    <- writer4
     } yield (sqrt >>> addOne >>> divideBy2)(initialValue)
   ).run
 
